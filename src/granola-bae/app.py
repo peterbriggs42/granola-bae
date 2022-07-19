@@ -1,6 +1,6 @@
 import sys
 import json
-from flask import Flask, render_template
+from flask import Flask, render_template, jsonify
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -40,11 +40,24 @@ def import_market_data(db):
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    markets = Market.query.all()
+    return render_template('index.html', markets=markets)
+
+@app.route('/market/<int:market_id>')
+def get_market(market_id):
+    markets = Market.query.filter_by(id=market_id).all()
+    coords = [[market.latitude, market.longitude] for market in markets]
+    return jsonify({"data": coords})
+
+@app.route('/markets')
+def get_all_markets():
+    markets = Market.query.all()
+    coords = [[market.latitude, market.longitude] for market in markets]
+    return jsonify({"data": coords})
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:
-        if sys.argv[1] == 'mkdb':
+        if sys.argv[1] == 'makedb':
             db.create_all()
             import_market_data(db)
         elif sys.argv[1] == 'readdb':

@@ -10,7 +10,7 @@ function makeMap() {
 var layer = L.layerGroup();
 
 function renderData(districtid) {
-    $.getJSON("/district/" + districtid, function(obj) {
+    $.getJSON("/market/" + districtid, function(obj) {
         var markers = obj.data.map(function(arr) {
             return L.marker([arr[0], arr[1]]);
         });
@@ -20,12 +20,23 @@ function renderData(districtid) {
     });
 }
 
+function renderMarkets() {
+    $.getJSON("/markets", function(obj) {
+        var markers = obj.data.map(function(arr) {
+            return L.marker([arr[0], arr[1]]);
+        });
+        layer = L.layerGroup(markers);
+        mymap.addLayer(layer);
+    });
+}
 
 $(function() {
     makeMap();
-    renderData('0');
+    // renderData('0');
+    renderMarkets();
     $('#distsel').change(function() {
-        var val = $('#distsel option:selected').val();
-        renderData(val);
+        // TODO change this to switch editor to the selected market
+        // var val = $('#distsel option:selected').val();
+        // renderData(val);
     });
 })
