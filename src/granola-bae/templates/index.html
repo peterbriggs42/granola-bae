@@ -1,21 +1,15 @@
-<html>
-<head>
-    <script src="{{url_for('static', filename='jquery-2.2.2.min.js')}}"></script>
-    <script src="{{url_for('static', filename='leaflet/leaflet.js')}}"></script>
-    <link rel="stylesheet" href="{{url_for('static', filename='leaflet/leaflet.css')}}">
-    <link rel="stylesheet" href="{{url_for('static', filename='demo.css')}}">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+{% extends 'base.html' %}
 
-</head>
-<body>
-    <h1>Flask + Leaflet</h1>
-    <div id="llmap"></div>
-    <div>
-        <select id="distsel">
-          {% for market in markets %}
-          <option value="{{market.id}}">{{market.name}}</option>
-          {% endfor %}
-        </select>
-    </div>
-    <script src="{{url_for('static', filename='demo.js')}}"></script>
-</body>
+{% block content %}
+    <h1>{% block title %} Here's all the farmers markets {% endblock %}</h1>
+    {% for market in markets %}
+        <a href="#">
+            <h2>{{ market['name' ]}}</h2>
+        </a>
+        <span class="badge badge-primary">({{ market['latitude'] }}, {{ market['longitude']}})</span>
+        <a href="{{ url_for('edit', id=market['id']) }}">
+            <span class="badge badge-warning">Edit</span>
+        </a>
+        <hr>
+    {% endfor %}
+{% endblock %}

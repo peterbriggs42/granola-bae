@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Flask + Leaflet</h1>
+    <div id="llmap"></div>
+    <div>
+        <select id="distsel">
+          {% for market in markets %}
+          <option value="{{market.id}}">{{market.name}}</option>
+          {% endfor %}
+        </select>
+    </div>
+    <script src="{{url_for('static', filename='demo.js')}}"></script>
+{% endblock %}
