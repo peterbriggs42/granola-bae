@@ -7,16 +7,16 @@ from setuptools import setup
 here = path.abspath(path.dirname(__file__))
 
 about = {}
-with open(path.join(here, "src", "granola-bae", "__version__.py"), encoding="utf8") as fh:
+with open(path.join(here, "src", "granola-web", "__version__.py"), encoding="utf8") as fh:
     exec(fh.read(), about)
 
 with open(path.join(here, "README.md"), "r", "utf-8") as f:
     readme = f.read()
 
 setup(
-    name="granola-bae",
+    name="granola-web",
     version=about["__version__"],
-    url="https://github.com/peterbriggs42/granola-bae",
+    url="https://github.com/peterbriggs42/granola-web",
     description="The official tool for evaluating hot produce",
     long_description=readme,
     long_description_content_type="text/markdown",

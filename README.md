@@ -8,5 +8,7 @@ https://codeberg.org/OpenPriceLibrary/trastr-server
    -- build out a form for entering data, bind to model
    -- connect the form to the leaflet map: click on marker opens up form w selected record
 [] dockerize the app
+   -- first change the structure so that things look like normal flask app
 [] make it write records to an actual postgres db
 [] Figure out how to navigate using map clicks without reloading the page
+[] Write tests
