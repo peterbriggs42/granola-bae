@@ -9,34 +9,26 @@ function makeMap() {
 
 var layer = L.layerGroup();
 
-function renderData(districtid) {
-    $.getJSON("/market/" + districtid, function(obj) {
-        var markers = obj.data.map(function(arr) {
-            return L.marker([arr[0], arr[1]]);
+function renderMarkets() {
+    $.getJSON("/markets", function(obj) {
+        var markers = obj.data.map(function(market) {
+            var content = `${market['name']}<br/><a href=\"${market['id']}/edit\" >Edit</a>`;
+            var m = L.marker([market['latitude'], market['longitude']]).bindPopup(content);
+            m.marketId = market['id'];
+            return m;
         });
-        mymap.removeLayer(layer);
         layer = L.layerGroup(markers);
         mymap.addLayer(layer);
     });
 }
 
-function renderMarkets() {
-    $.getJSON("/markets", function(obj) {
-        var markers = obj.data.map(function(arr) {
-            return L.marker([arr[0], arr[1]]);
-        });
-        layer = L.layerGroup(markers);
-        mymap.addLayer(layer);
-    });
-}
+// TODO figure out how to nav without page reload -- do we need a single page framework
+// function markerOnClick(e) {
+//     console.log(e);
+//     window.location.href = `/${e.target.marketId}/edit`;
+// }
 
 $(function() {
     makeMap();
-    // renderData('0');
     renderMarkets();
-    $('#distsel').change(function() {
-        // TODO change this to switch editor to the selected market
-        // var val = $('#distsel option:selected').val();
-        // renderData(val);
-    });
 })

@@ -30,6 +30,9 @@ class Market(db.Model):
     def __repr__(self):
         return "<Point %d: Lat %s Lng %s>" % (self.id, self.latitude, self.longitude)
 
+    def as_dict(self):
+        return {c.name: getattr(self,c.name) for c in self.__table__.columns}
+
 def import_market_data(db):
     with open('farmers-markets.json') as data_file:    
         data = json.load(data_file)
@@ -79,8 +82,8 @@ def edit(id):
 @app.route('/markets')
 def get_all_markets():
     markets = Market.query.all()
-    coords = [[market.latitude, market.longitude] for market in markets]
-    return jsonify({"data": coords})
+    markets_json = [m.as_dict() for m in markets]
+    return jsonify({"data": markets_json})
 
 # TODO move these commands into a separate utils.py script
 if __name__ == '__main__':

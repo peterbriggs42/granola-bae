@@ -9,3 +9,4 @@ https://codeberg.org/OpenPriceLibrary/trastr-server
    -- connect the form to the leaflet map: click on marker opens up form w selected record
 [] dockerize the app
 [] make it write records to an actual postgres db
+[] Figure out how to navigate using map clicks without reloading the page
